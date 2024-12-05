@@ -4,9 +4,14 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
+// DB Connection
+import { dbConnect } from "./config/dbConfig.js";
+dbConnect();
+
 // middlewares
 import cors from "cors";
 import morgan from "morgan";
+
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
