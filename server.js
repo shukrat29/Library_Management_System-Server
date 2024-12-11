@@ -1,6 +1,7 @@
 import express from "express";
 import { dbConnect } from "./config/dbConfig.js";
 import authRouter from "./routes/authRoute.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 
 // Routes / api endpoints
 app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandler);
 
 // server runs only if db is connected
 dbConnect()

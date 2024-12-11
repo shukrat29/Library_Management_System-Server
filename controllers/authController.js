@@ -20,6 +20,9 @@ export const insertNewUser = async (req, res, next) => {
       message: "Unable to create an account, try again later",
     });
   } catch (error) {
+    if (error.message.includes("E11000 duplicate key error collection")) {
+      error.message = "The email already exist";
+    }
     next(error);
   }
 };
