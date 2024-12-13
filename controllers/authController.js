@@ -1,6 +1,7 @@
 import { responseClient } from "../middleware/responseClient.js";
 import { createNewSession } from "../models/session/sessionModel.js";
 import { createNewUser } from "../models/user/userModel.js";
+import { userActivationUrlEmail } from "../services/email/emailService.js";
 import { hashPassword } from "../utils/bcrypt.js";
 import { v4 as uuidv4 } from "uuid";
 
@@ -24,6 +25,7 @@ export const insertNewUser = async (req, res, next) => {
           "http//localhost:5371?id=" + session._id + "&t=" + session.token;
         // send this url to user email
         console.log(url);
+        userActivationUrlEmail({ email: user.email, url, name: user.fName });
       }
       const message =
         "We have sent and activation link please check your email and follow instructions to activate your account";
