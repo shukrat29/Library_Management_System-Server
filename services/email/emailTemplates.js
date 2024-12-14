@@ -3,7 +3,7 @@ export const userActivationUrlEmailTemplate = ({ email, name, url }) => {
     from: `"Local library👻" <${process.env.SMTP_EMAIL}>`, // sender address
     to: email, // list of receivers
     subject: "Action Required- Activate your new account", // Subject line
-    text: `Hellow ${name} follow the link to activate your account. url`, // plain text body
+    text: `Hellow ${name} follow the link to activate your account. ${url}`, // plain text body
     html: `
     <p>Hello ${name}</p>
    <br />

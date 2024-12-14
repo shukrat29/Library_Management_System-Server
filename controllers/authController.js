@@ -21,15 +21,21 @@ export const insertNewUser = async (req, res, next) => {
       });
 
       if (session?._id) {
-        const url =
-          "http//localhost:5371?id=" + session._id + "&t=" + session.token;
+        const url = `${process.env.ROOT_URL}/activate-user?sessionId=${session._id}&t=${session.token}`;
         // send this url to user email
-        console.log(url);
-        userActivationUrlEmail({ email: user.email, url, name: user.fName });
+
+        const emailId = await userActivationUrlEmail({
+          email: user.email,
+          url,
+          name: user.fName,
+        });
+
+        if (emailId) {
+          const message =
+            "We have sent and activation link please check your email and follow instructions to activate your account";
+          return responseClient(req, res, message);
+        }
       }
-      const message =
-        "We have sent and activation link please check your email and follow instructions to activate your account";
-      return responseClient(req, res, message);
     }
 
     throw new Error("Unable to create an account, try again later");
